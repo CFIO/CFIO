@@ -75,7 +75,7 @@ cd {CFIO install dir}/test/client/C
 mpirun -n 18 ./func_test
 ```
 
-If this program end without any error and a nc file name "test.nc" is generated, congratulations! your CFIO performs will.
+If this program end without any error and a nc file name "test.nc" is generated, congratulations! your CFIO performs well.
 
 You can open the "test.nc" and verify the output. It contents two dims of "lat" and "lon", one var of "time_v", and a data array values from 0 to 255:
 
@@ -108,7 +108,7 @@ For example:
 ```c
 MPI_Init(...);
 ...
-cfio_init(lat_proc, lon_proc, cfio_ratio);
+cfio_init(...);
 ...
 for () {
   //netCDF interface likes functions
