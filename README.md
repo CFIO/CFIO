@@ -120,15 +120,9 @@ cfio_finalize(...);
 
 ```
 
-How does CFIO work
-------------------
+More about CFIO
+---------------
 
-[CFIO design](https://github.com/CFIO/CFIO/wiki/CFIO-Design)
-
-
-Related papers
---------------
-
-[A fast I/O library for high resolution climate models](https://github.com/CFIO/CFIO/blob/master/papers/GMD_CFIO.pdf)
+[Go to wiki](https://github.com/CFIO/CFIO/wiki)
 
 
