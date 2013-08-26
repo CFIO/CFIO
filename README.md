@@ -42,7 +42,7 @@ Or, you may want to install CFIO into another directory:
 
 If a warning that looks like "mpi compiler not found" appears, you need to specify "CC" and "FC" when configure: 
 
-(mpiicc and mpiifort are recommended if your have Intel MPI installed on your cluster)
+(mpiicc and mpiifort are recommended if you have Intel MPI installed on your cluster)
 
 ```bash
 ./configure --with-dependency={PnetCDF dir} CC=mpicc(or mpiicc) FC=mpifort(or mpiifort)
