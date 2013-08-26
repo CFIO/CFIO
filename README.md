@@ -10,7 +10,7 @@ of I/O with computing. CFIO performs better than PnetCDF in terms of decreasing 
 What you need to build CFIO
 ---------------------------
 
-YOU need the following softwares been installed before build CFIO, otherwise you may fail to configure.
+You need the following softwares been installed before build CFIO, otherwise you may fail to configure.
 
 1. MPI
 
@@ -41,6 +41,7 @@ Or, you may want to install CFIO into another directory:
 ```
 
 If a warning that looks like "mpi compiler not found" appears, you need to specify "CC" and "FC" when configure: 
+
 (mpiicc and mpiifort are recommended if your have Intel MPI installed on your cluster)
 
 ```bash
@@ -75,6 +76,7 @@ mpirun -n 18 ./func_test
 ```
 
 If this program end without any error and a nc file name "test.nc" is generated, congratulations! your CFIO performs will.
+
 You can open the "test.nc" and verify the output. It contents two dims of "lat" and "lon", one var of "time_v", and a data array values from 0 to 255:
 
 ```bash
