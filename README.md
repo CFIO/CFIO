@@ -129,7 +129,6 @@ How does CFIO work
 Related papers
 --------------
 
-[Go to wiki papaer](http://baidu.com)
 [A fast I/O library for high resolution climate models](https://github.com/CFIO/CFIO/blob/master/papers/GMD_CFIO.pdf)
 
 
