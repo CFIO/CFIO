@@ -54,10 +54,11 @@ An example:
 ./configure --with-dependency=/home/bus/esml-soft --prefix=/home/bus/esml-cfio CC=mpiicc FC=mpiifort
 ```
 
-### make ###
+### install ###
 
 ```bash
 make
+make install
 ```
 
 Test CFIO
