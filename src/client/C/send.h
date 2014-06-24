@@ -18,7 +18,7 @@
 
 #include "cfio_types.h"
 
-#define SEND_BUF_SIZE ((size_t)1024*1024*1024)
+#define SEND_BUF_SIZE ((size_t)200*1024*1024)
 #define SEND_MSG_MIN_SIZE ((size_t)70*1024*1024)
 
 /**

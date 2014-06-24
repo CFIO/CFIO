@@ -28,6 +28,7 @@
 #include "debug.h"
 #include "times.h"
 #include "cfio_error.h"
+#include "define.h"
 
 /* my real rank in mpi_comm_world */
 static int rank;
@@ -35,6 +36,7 @@ static int rank;
 static int client_num;
 static MPI_Comm inter_comm;
 static MPI_Comm client_comm, server_comm;
+static int server_comm_rank;
 
 int cfio_init(int x_proc_num, int y_proc_num, int ratio)
 {
@@ -75,6 +77,7 @@ int cfio_init(int x_proc_num, int y_proc_num, int ratio)
     {
 	best_server_amount = 1;
     }
+    server_proc_num = best_server_amount;
 
     MPI_Comm_group(MPI_COMM_WORLD, &group);
     
@@ -108,16 +111,24 @@ int cfio_init(int x_proc_num, int y_proc_num, int ratio)
 
     if(cfio_map_proc_type(rank) == CFIO_MAP_TYPE_SERVER)
     {
+	MPI_Comm_rank(server_comm, &server_comm_rank);
+
 	if((ret = cfio_server_init()) < 0)
 	{
 	    error("");
 	    return ret;
 	}
+
+	double server_start_begin, server_start_end;
+	server_start_begin = times_cur();
+
 	if((ret = cfio_server_start()) < 0)
 	{
 	    error("");
 	    return ret;
 	}
+	server_start_end = times_cur();
+
     }else if(cfio_map_proc_type(rank) == CFIO_MAP_TYPE_CLIENT)
     {
 	if((ret = cfio_send_init(CLIENT_BUF_SIZE)) < 0)
@@ -473,7 +484,7 @@ void cfio_finalize_c_(int *ierr)
     *ierr = cfio_finalize();
 }
 
-void cfio_proc_type_c_(int *type)
+void cfio_proc_type_c_(int rank, int *type)
 {
     *type = cfio_proc_type();
 }

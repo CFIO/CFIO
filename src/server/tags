@@ -1,0 +1,200 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+ADDR_REGION_SIZE	rdma_server.c	/^static int ADDR_REGION_SIZE; $/;"	v	file:
+ATT_NAME_START	io.h	33;"	d
+ATT_NAME_SUB_AMOUNT	io.h	32;"	d
+CFIO_RECV_BUF_FULL	recv.h	24;"	d
+DATA_REGION_SIZE	rdma_server.c	/^static int DATA_REGION_SIZE; $/;"	v	file:
+DEALT_MSG	io.h	26;"	d
+DEBUG	server.c	30;"	d	file:
+ENQUEUE_MSG	io.h	29;"	d
+IMM_MSG	io.h	30;"	d
+IO_HASH_TABLE_SIZE	io.h	23;"	d
+MSG_ACK	rdma_server.c	/^	MSG_ACK$/;"	e	enum:__anon3::__anon4	file:
+MSG_ADDR	rdma_server.c	/^	MSG_ADDR,$/;"	e	enum:__anon3::__anon4	file:
+MSG_DONE	rdma_server.c	/^	MSG_DONE,$/;"	e	enum:__anon3::__anon4	file:
+MSG_MR	rdma_server.c	/^	MSG_MR,$/;"	e	enum:__anon3::__anon4	file:
+RECV_BUF_SIZE	recv.h	22;"	d
+RS_DONE_RECV	rdma_server.c	/^	RS_DONE_RECV$/;"	e	enum:__anon6::__anon8	file:
+RS_FINAL	rdma_server.c	/^	RS_FINAL,$/;"	e	enum:__anon6::__anon8	file:
+RS_INIT	rdma_server.c	/^	RS_INIT,$/;"	e	enum:__anon6::__anon8	file:
+RS_MR_RECV	rdma_server.c	/^	RS_MR_RECV,$/;"	e	enum:__anon6::__anon8	file:
+RS_RDMA_RECVING	rdma_server.c	/^	RS_RDMA_RECVING,$/;"	e	enum:__anon6::__anon8	file:
+SERVER_REGION_SIZE	server.c	/^static int SERVER_REGION_SIZE;$/;"	v	file:
+SS_DONE_SENT	rdma_server.c	/^	SS_DONE_SENT$/;"	e	enum:__anon6::__anon7	file:
+SS_FINAL	rdma_server.c	/^	SS_FINAL,$/;"	e	enum:__anon6::__anon7	file:
+SS_INIT	rdma_server.c	/^	SS_INIT,$/;"	e	enum:__anon6::__anon7	file:
+SS_MR_SENT	rdma_server.c	/^	SS_MR_SENT,$/;"	e	enum:__anon6::__anon7	file:
+SS_RDMA_SENDING	rdma_server.c	/^	SS_RDMA_SENDING,$/;"	e	enum:__anon6::__anon7	file:
+TEST_NZ	rdma_server.c	10;"	d	file:
+TEST_Z	rdma_server.c	11;"	d	file:
+TIMEOUT_IN_MS	rdma_server.c	/^static const int TIMEOUT_IN_MS = 500;$/;"	v	file:
+_CFIO_RDMA_SERVER_H	rdma_server.h	2;"	d
+_IO_H	io.h	19;"	d
+_RECV_H	recv.h	16;"	d
+_SERVER_H	server.h	16;"	d
+_add_bitmap	io.c	/^static inline void _add_bitmap(uint8_t *bitmap, int client_id)$/;"	f	file:
+_bitmap_full	io.c	/^static inline int _bitmap_full(uint8_t *bitmap)$/;"	f	file:
+_compare	io.c	/^static int _compare(void *key, struct qhash_head *link)$/;"	f	file:
+_copy_data_to_list	server.c	/^static void _copy_data_to_list(int c)$/;"	f	file:
+_free	io.c	/^static void _free(cfio_io_val_t *val)$/;"	f	file:
+_free_vars	server.c	/^static void _free_vars()$/;"	f	file:
+_handle_def	io.c	/^static inline int _handle_def(cfio_id_val_t *val)$/;"	f	file:
+_hash	io.c	/^static int _hash(void *key, int table_size)$/;"	f	file:
+_inc_src_index	io.c	/^static void _inc_src_index($/;"	f	file:
+_init_vars	server.c	/^static int _init_vars()$/;"	f	file:
+_io_msgs	server.c	/^void * _io_msgs(void *argv)$/;"	f
+_merge_var_data	io.c	/^void _merge_var_data($/;"	f
+_put_var	io.c	/^static int _put_var($/;"	f	file:
+_read_data	server.c	/^static void _read_data(int c, cfio_buf_addr_t *addr)$/;"	f	file:
+_recv_client_io	io.c	/^static inline int _recv_client_io($/;"	f	file:
+_remove_client_io	io.c	/^static inline int _remove_client_io($/;"	f	file:
+_update_start_and_count	io.c	/^void _update_start_and_count(int ndims, $/;"	f
+addr	rdma_server.c	/^    cfio_buf_addr_t addr;$/;"	m	struct:__anon3	file:
+addr_mr	rdma_server.c	/^    struct ibv_mr *addr_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+addr_mr	rdma_server.c	/^    struct ibv_mr addr_mr;$/;"	m	struct:__anon3	typeref:struct:__anon3::ibv_mr	file:
+addr_region	rdma_server.c	/^    char *addr_region;$/;"	m	struct:__anon6	file:
+addr_regions	rdma_server.c	/^char **addr_regions;$/;"	v
+begin_time	server.c	/^static double init_time, begin_time, end_time;$/;"	v	file:
+buf_addrs	server.c	/^static cfio_buf_addr_t **buf_addrs;$/;"	v	file:
+buffer	recv.c	/^static cfio_buf_t **buffer;$/;"	v	file:
+build_connection	rdma_server.c	/^void build_connection(struct rdma_cm_id *id)$/;"	f
+build_context	rdma_server.c	/^void build_context(struct ibv_context *verbs)$/;"	f
+build_params	rdma_server.c	/^void build_params(struct rdma_conn_param *params)$/;"	f
+build_qp_attr	rdma_server.c	/^void build_qp_attr(struct ibv_qp_init_attr *qp_attr)$/;"	f
+cfio_comm	server.c	/^static void * cfio_comm(void *argv)$/;"	f	file:
+cfio_io_close	io.c	/^int cfio_io_close(cfio_msg_t *msg)$/;"	f
+cfio_io_create	io.c	/^int cfio_io_create(cfio_msg_t *msg)$/;"	f
+cfio_io_def_dim	io.c	/^int cfio_io_def_dim(cfio_msg_t *msg)$/;"	f
+cfio_io_def_var	io.c	/^int cfio_io_def_var(cfio_msg_t *msg)$/;"	f
+cfio_io_enddef	io.c	/^int cfio_io_enddef(cfio_msg_t *msg)$/;"	f
+cfio_io_final	io.c	/^int cfio_io_final()$/;"	f
+cfio_io_init	io.c	/^int cfio_io_init()$/;"	f
+cfio_io_key_t	io.h	/^}cfio_io_key_t;$/;"	t	typeref:struct:__anon1
+cfio_io_put_att	io.c	/^int cfio_io_put_att(cfio_msg_t *msg)$/;"	f
+cfio_io_put_vara	io.c	/^int cfio_io_put_vara(cfio_msg_t *msg)$/;"	f
+cfio_io_val_t	io.h	/^}cfio_io_val_t;$/;"	t	typeref:struct:__anon2
+cfio_rdma_server_final	rdma_server.c	/^void cfio_rdma_server_final()$/;"	f
+cfio_rdma_server_get_addr	rdma_server.c	/^inline char * cfio_rdma_server_get_addr(int client_index)$/;"	f
+cfio_rdma_server_get_data	rdma_server.c	/^inline char * cfio_rdma_server_get_data(int client_index)$/;"	f
+cfio_rdma_server_init	rdma_server.c	/^void cfio_rdma_server_init($/;"	f
+cfio_rdma_server_read_data	rdma_server.c	/^void cfio_rdma_server_read_data($/;"	f
+cfio_rdma_server_recv_addr	rdma_server.c	/^void cfio_rdma_server_recv_addr(int client_index)$/;"	f
+cfio_rdma_server_send_ack	rdma_server.c	/^void cfio_rdma_server_send_ack(int client_index)$/;"	f
+cfio_rdma_server_show_data	rdma_server.c	/^inline void cfio_rdma_server_show_data(int client_index)$/;"	f
+cfio_rdma_server_test	rdma_server.c	/^inline int cfio_rdma_server_test(int clt)$/;"	f
+cfio_rdma_server_test_show	rdma_server.c	/^inline int cfio_rdma_server_test_show(int clt)$/;"	f
+cfio_rdma_server_wait_all	rdma_server.c	/^inline void cfio_rdma_server_wait_all()$/;"	f
+cfio_rdma_server_write_addr	rdma_server.c	/^void cfio_rdma_server_write_addr(int client_index)$/;"	f
+cfio_recv_add_msg	recv.c	/^int cfio_recv_add_msg(int client_rank, int size, char *data, uint32_t *func_code, int itr)$/;"	f
+cfio_recv_final	recv.c	/^int cfio_recv_final()$/;"	f
+cfio_recv_get_first	recv.c	/^cfio_msg_t *cfio_recv_get_first()$/;"	f
+cfio_recv_init	recv.c	/^int cfio_recv_init()$/;"	f
+cfio_recv_unpack_close	recv.c	/^int cfio_recv_unpack_close($/;"	f
+cfio_recv_unpack_create	recv.c	/^int cfio_recv_unpack_create($/;"	f
+cfio_recv_unpack_def_dim	recv.c	/^int cfio_recv_unpack_def_dim($/;"	f
+cfio_recv_unpack_def_var	recv.c	/^int cfio_recv_unpack_def_var($/;"	f
+cfio_recv_unpack_enddef	recv.c	/^int cfio_recv_unpack_enddef($/;"	f
+cfio_recv_unpack_func_code	recv.c	/^int cfio_recv_unpack_func_code(cfio_msg_t *msg, uint32_t *func_code)$/;"	f
+cfio_recv_unpack_msg_size	recv.c	/^int cfio_recv_unpack_msg_size(cfio_msg_t *msg, size_t *size)$/;"	f
+cfio_recv_unpack_put_att	recv.c	/^int cfio_recv_unpack_put_att($/;"	f
+cfio_recv_unpack_put_vara	recv.c	/^int cfio_recv_unpack_put_vara($/;"	f
+cfio_server_final	server.c	/^int cfio_server_final()$/;"	f
+cfio_server_init	server.c	/^int cfio_server_init()$/;"	f
+cfio_server_start	server.c	/^int cfio_server_start()$/;"	f
+client_amt	rdma_server.c	/^static int client_amt; \/\/ amount of mapped client$/;"	v	file:
+client_bitmap	io.h	/^    uint8_t *client_bitmap;$/;"	m	struct:__anon2
+client_dim_id	io.h	/^    int client_dim_id;$/;"	m	struct:__anon1
+client_dim_id	io.h	/^    int client_dim_id;$/;"	m	struct:__anon2
+client_get_index	recv.c	/^static int client_get_index = 0;$/;"	v	file:
+client_ids	server.c	/^static int *client_ids;$/;"	v	file:
+client_nc_id	io.h	/^    int client_nc_id;$/;"	m	struct:__anon1
+client_nc_id	io.h	/^    int client_nc_id;$/;"	m	struct:__anon2
+client_num	recv.c	/^static int client_num;$/;"	v	file:
+client_num	server.c	/^static int client_num;$/;"	v	file:
+client_var_id	io.h	/^    int client_var_id;$/;"	m	struct:__anon1
+client_var_id	io.h	/^    int client_var_id;$/;"	m	struct:__anon2
+cm_id	rdma_server.c	/^static struct rdma_cm_id *cm_id = NULL; \/\/ local cm_id$/;"	v	typeref:struct:rdma_cm_id	file:
+comm_done_cnt	server.c	/^static int comm_done_cnt = 0;$/;"	v	file:
+comm_dones	server.c	/^static int *comm_dones;$/;"	v	file:
+comp_channel	rdma_server.c	/^    struct ibv_comp_channel *comp_channel;$/;"	m	struct:__anon5	typeref:struct:__anon5::ibv_comp_channel	file:
+conn_cnt	rdma_server.c	/^static int conn_cnt = 0; \/\/ count of struct conn$/;"	v	file:
+connect_to_clients	rdma_server.c	/^void connect_to_clients()$/;"	f
+connected	rdma_server.c	/^    int connected;$/;"	m	struct:__anon6	file:
+copy_lens	server.c	/^static int *copy_lens; \/\/ length of data region has been copied$/;"	v	file:
+cq	rdma_server.c	/^    struct ibv_cq *cq;$/;"	m	struct:__anon5	typeref:struct:__anon5::ibv_cq	file:
+cq_poller_thread	rdma_server.c	/^    pthread_t cq_poller_thread;$/;"	m	struct:__anon5	file:
+ctx	rdma_server.c	/^    struct ibv_context *ctx;$/;"	m	struct:__anon5	typeref:struct:__anon5::ibv_context	file:
+data_mr	rdma_server.c	/^    struct ibv_mr *data_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+data_mr	rdma_server.c	/^    struct ibv_mr data_mr;$/;"	m	struct:__anon3	typeref:struct:__anon3::ibv_mr	file:
+data_region	rdma_server.c	/^    char *data_region;$/;"	m	struct:__anon6	file:
+data_regions	rdma_server.c	/^char **data_regions;$/;"	v
+decode	server.c	/^static int decode(cfio_msg_t *msg)$/;"	f	file:
+destroy_connection	rdma_server.c	/^void destroy_connection(rdma_conn_t *conn)$/;"	f
+die	rdma_server.c	/^void die(const char *reason)$/;"	f
+disconn_cnt	rdma_server.c	/^static int disconn_cnt = 0;$/;"	v	file:
+ec	rdma_server.c	/^static struct rdma_event_channel *ec = NULL;$/;"	v	typeref:struct:rdma_event_channel	file:
+end_time	server.c	/^static double init_time, begin_time, end_time;$/;"	v	file:
+established_cnt	rdma_server.c	/^static int established_cnt = 0; \/\/ count of established connections$/;"	v	file:
+func_code	io.h	/^    int func_code;$/;"	m	struct:__anon1
+func_code	io.h	/^    int func_code;$/;"	m	struct:__anon2
+hash_link	io.h	/^    qlist_head_t hash_link;$/;"	m	struct:__anon2
+id	rdma_server.c	/^    struct rdma_cm_id *id;$/;"	m	struct:__anon6	typeref:struct:__anon6::rdma_cm_id	file:
+init_time	server.c	/^static double init_time, begin_time, end_time;$/;"	v	file:
+io_cond	server.c	/^static pthread_cond_t io_cond = PTHREAD_COND_INITIALIZER;$/;"	v	file:
+io_mutex	server.c	/^static pthread_mutex_t io_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
+io_table	io.c	/^static struct qhash_table *io_table;$/;"	v	typeref:struct:qhash_table	file:
+itr	server.c	/^static int itr = 1;$/;"	v	file:
+itrs	server.c	/^static int *itrs;$/;"	v	file:
+local_lens	server.c	/^static int *local_lens; \/\/ length of data region that does not be copied$/;"	v	file:
+msg_clt_cnt	server.c	/^static volatile int msg_clt_cnt = 0;$/;"	v	file:
+msg_cnts	server.c	/^static int *msg_cnts;$/;"	v	file:
+msg_head	recv.c	/^static cfio_msg_t *msg_head;$/;"	v	file:
+on_completion	rdma_server.c	/^void on_completion(struct ibv_wc *wc)$/;"	f
+on_connect	rdma_server.c	/^void on_connect(rdma_conn_t *conn)$/;"	f
+ordered_conns	rdma_server.c	/^static rdma_conn_t **ordered_conns; \/\/ ordered conns by client rank$/;"	v	file:
+paused	server.c	/^static volatile int paused = 1;$/;"	v	file:
+pd	rdma_server.c	/^    struct ibv_pd *pd;$/;"	m	struct:__anon5	typeref:struct:__anon5::ibv_pd	file:
+peer_addr_mr	rdma_server.c	/^    struct ibv_mr peer_addr_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+peer_data_mr	rdma_server.c	/^    struct ibv_mr peer_data_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+poll_cq	rdma_server.c	/^void * poll_cq(void *ctx)$/;"	f
+post_receives	rdma_server.c	/^void post_receives(rdma_conn_t *conn)$/;"	f
+qp	rdma_server.c	/^    struct ibv_qp *qp;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_qp	file:
+rank	rdma_server.c	/^    int rank;$/;"	m	struct:__anon3	file:
+rank	rdma_server.c	/^    int rank;$/;"	m	struct:__anon6	file:
+rank	rdma_server.c	/^static int rank;$/;"	v	file:
+rank	recv.c	/^static int rank;$/;"	v	file:
+rank	server.c	/^static int rank;$/;"	v	file:
+rdma_conn_t	rdma_server.c	/^} rdma_conn_t;$/;"	t	typeref:struct:__anon6	file:
+rdma_conns	rdma_server.c	/^static rdma_conn_t **rdma_conns; \/\/ one conn per client, it's disordered$/;"	v	file:
+rdma_ctx_t	rdma_server.c	/^} rdma_ctx_t;$/;"	t	typeref:struct:__anon5	file:
+rdma_debug	rdma_server.c	13;"	d	file:
+rdma_msg_t	rdma_server.c	/^} rdma_msg_t;$/;"	t	typeref:struct:__anon3	file:
+read_addrs	server.c	/^static char **read_addrs; \/\/ start addr of buffer to be read$/;"	v	file:
+read_dones	server.c	/^static int *read_dones;$/;"	v	file:
+ready_mr_cnt	rdma_server.c	/^static volatile int ready_mr_cnt = 0; $/;"	v	file:
+recv_bufs	server.c	/^static char **recv_bufs;$/;"	v	file:
+recv_mr	rdma_server.c	/^    struct ibv_mr *recv_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+recv_msg	rdma_server.c	/^    rdma_msg_t *recv_msg;$/;"	m	struct:__anon6	file:
+recv_state	rdma_server.c	/^    } recv_state;$/;"	m	struct:__anon6	typeref:enum:__anon6::__anon8	file:
+register_memory	rdma_server.c	/^void register_memory(rdma_conn_t *conn)$/;"	f
+request_stack_size	rdma_server.c	/^static volatile int request_stack_size = 0;$/;"	v	file:
+rest_reqs	rdma_server.c	/^static volatile int *rest_reqs;$/;"	v	file:
+s_ctx	rdma_server.c	/^static rdma_ctx_t *s_ctx = NULL;$/;"	v	file:
+send_message	rdma_server.c	/^void send_message(rdma_conn_t *conn)$/;"	f
+send_mr	rdma_server.c	/^    struct ibv_mr *send_mr;$/;"	m	struct:__anon6	typeref:struct:__anon6::ibv_mr	file:
+send_mr	rdma_server.c	/^void send_mr(rdma_conn_t *conn)$/;"	f
+send_msg	rdma_server.c	/^    rdma_msg_t *send_msg;$/;"	m	struct:__anon6	file:
+send_state	rdma_server.c	/^    } send_state;$/;"	m	struct:__anon6	typeref:enum:__anon6::__anon7	file:
+server_get_ib_addr	rdma_server.c	/^void server_get_ib_addr(char *host)$/;"	f
+server_id	io.c	/^static int server_id;$/;"	v	file:
+server_on_connect_request	rdma_server.c	/^int server_on_connect_request(struct rdma_cm_id *id)$/;"	f
+server_on_connection	rdma_server.c	/^int server_on_connection(struct rdma_cm_id *id)$/;"	f
+server_on_disconnect	rdma_server.c	/^int server_on_disconnect(struct rdma_cm_id *id)$/;"	f
+server_on_event	rdma_server.c	/^int server_on_event(struct rdma_cm_event *event)$/;"	f
+type	rdma_server.c	/^    } type;$/;"	m	struct:__anon3	typeref:enum:__anon3::__anon4	file:
+wait_rdma_event	rdma_server.c	/^void wait_rdma_event()$/;"	f

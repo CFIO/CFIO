@@ -19,7 +19,7 @@
 #include "msg.h"
 #include "cfio_types.h"
 
-#define RECV_BUF_SIZE ((size_t)1*1024*1024*1024)
+#define RECV_BUF_SIZE ((size_t)300*1024*1024)
 
 #define CFIO_RECV_BUF_FULL 1
 
@@ -29,25 +29,13 @@
  * @return: error code
  */
 int cfio_recv_init();
+
 /**
  * @brief: finalize , free the buffer and msg queue
  *
  * @return: error code
  */
 int cfio_recv_final();
-int cfio_iprobe(
-	int *src, int src_len, MPI_Comm comm, int *flag);
-/**
- * @brief: recv msg from client
- *
- * @param rank: the rank of server who recv the msg
- * @param comm: MPI communicator
- * @param _msg: point to the msg which is recieved
- *
- * @return: error code
- */
-int cfio_recv(
-	int src, int rank, MPI_Comm comm, uint32_t *func_code);
 
 /**
  * @brief: get the first msg in msg queue
@@ -55,7 +43,9 @@ int cfio_recv(
  * @return: pointer to the first msg
  */
 cfio_msg_t* cfio_recv_get_first();
+
 int cfio_recv_unpack_msg_size(cfio_msg_t *msg, size_t *size);
+
 /**
  * @brief: unpack funciton code from the buffer
  *
@@ -67,6 +57,7 @@ int cfio_recv_unpack_msg_size(cfio_msg_t *msg, size_t *size);
 int cfio_recv_unpack_func_code(
 	cfio_msg_t *msg,
 	uint32_t *func_code);
+
 /**
  * @brief: unpack arguments for ifow_create function
  *

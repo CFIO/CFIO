@@ -1,4 +1,4 @@
-AC_INIT([CFIO], [1.20], [never.wencan@gmail.com])
+AC_INIT([CFIO], [2.1], [zhangwpc@gmail.com])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 #AC_PROG_CC
 #CC=mpiicc
@@ -7,7 +7,7 @@ AC_PROG_FC
 
 #AM_PATH_CHECK
 
-CPPFLAGS="$CPPFLAGS -mcmodel=medium -shared-intel"
+CPPFLAGS="$CPPFLAGS -mcmodel=medium -shared-intel "
 #CPPFLAGS="$CPPFLAGS"
 
 AC_ARG_WITH([dependency],
@@ -123,8 +123,13 @@ dnl netcdf
 #AC_CHECK_HEADERS([netcdf.h],,AC_MSG_ERROR(can not find netcdf.h))
 #AC_CHECK_LIB([netcdf], [nc_close],,AC_MSG_ERROR([invalid netcdf library]), [-lpnetcdf -lhdf5_hl -lhdf5 -lcurl -lsz])
 #
+
 dnl -----------------------------------------------
-dnl pnetcdf
+dnl rdmacm
+
+CPPFLAGS="$CPPFLAGS -I/usr/include"
+LDFLAGS="$LDFLAGS -L/usr/lib64 -lrdmacm"
+
 
 AC_CHECK_LIB([pthread], [pthread_create],,AC_MSG_ERROR([invalid pthread library]))
 

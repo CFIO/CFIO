@@ -61,11 +61,13 @@ libcfio_a_AR = $(AR) $(ARFLAGS)
 libcfio_a_LIBADD =
 am__objects_1 = libcfio_a-buffer.$(OBJEXT) libcfio_a-debug.$(OBJEXT) \
 	libcfio_a-id.$(OBJEXT) libcfio_a-map.$(OBJEXT) \
-	libcfio_a-msg.$(OBJEXT) libcfio_a-times.$(OBJEXT)
+	libcfio_a-msg.$(OBJEXT) libcfio_a-times.$(OBJEXT) \
+	libcfio_a-addr.$(OBJEXT)
 am__objects_2 = libcfio_a-io.$(OBJEXT) libcfio_a-server.$(OBJEXT) \
-	libcfio_a-recv.$(OBJEXT)
+	libcfio_a-recv.$(OBJEXT) libcfio_a-rdma_server.$(OBJEXT)
 am_libcfio_a_OBJECTS = libcfio_a-cfio.$(OBJEXT) \
-	libcfio_a-send.$(OBJEXT) $(am__objects_1) $(am__objects_2)
+	libcfio_a-send.$(OBJEXT) libcfio_a-rdma_client.$(OBJEXT) \
+	$(am__objects_1) $(am__objects_2)
 libcfio_a_OBJECTS = $(am_libcfio_a_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -191,15 +193,17 @@ common = $(common_dir)/buffer.c	$(common_dir)/buffer.h 	    $(common_dir)/debug.
 	 $(common_dir)/id.h  	$(common_dir)/cfio_error.h  $(common_dir)/cfio_types.h  \
 	 $(common_dir)/map.c  	$(common_dir)/map.h  	    $(common_dir)/msg.c  	\
 	 $(common_dir)/msg.h  	$(common_dir)/quickhash.h   $(common_dir)/quicklist.h  	\
-	 $(common_dir)/times.c  $(common_dir)/times.h
+	 $(common_dir)/times.c  $(common_dir)/times.h       $(common_dir)/addr.c        \
+	 $(common_dir)/addr.h
 
 server_dir = ../../server
 server = $(server_dir)/io.c $(server_dir)/io.h  \
 	 $(server_dir)/server.c  $(server_dir)/server.h \
-	 $(server_dir)/recv.c  $(server_dir)/recv.h
+	 $(server_dir)/recv.c  $(server_dir)/recv.h \
+	 $(server_dir)/rdma_server.c  $(server_dir)/rdma_server.h 
 
 lib_LIBRARIES = libcfio.a
-libcfio_a_SOURCES = cfio.h cfio.c send.h send.c\
+libcfio_a_SOURCES = cfio.h cfio.c send.h send.c	rdma_client.c rdma_client.h \
 		    $(common) $(server)
 
 libcfio_a_CFLAGS = -I$(common_dir) -I$(server_dir)
@@ -277,6 +281,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-addr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-cfio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-debug.Po@am__quote@
@@ -284,6 +289,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-io.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-map.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-msg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-rdma_client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-rdma_server.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-recv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-send.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcfio_a-server.Po@am__quote@
@@ -337,6 +344,20 @@ libcfio_a-send.obj: send.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='send.c' object='libcfio_a-send.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-send.obj `if test -f 'send.c'; then $(CYGPATH_W) 'send.c'; else $(CYGPATH_W) '$(srcdir)/send.c'; fi`
+
+libcfio_a-rdma_client.o: rdma_client.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-rdma_client.o -MD -MP -MF "$(DEPDIR)/libcfio_a-rdma_client.Tpo" -c -o libcfio_a-rdma_client.o `test -f 'rdma_client.c' || echo '$(srcdir)/'`rdma_client.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-rdma_client.Tpo" "$(DEPDIR)/libcfio_a-rdma_client.Po"; else rm -f "$(DEPDIR)/libcfio_a-rdma_client.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rdma_client.c' object='libcfio_a-rdma_client.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-rdma_client.o `test -f 'rdma_client.c' || echo '$(srcdir)/'`rdma_client.c
+
+libcfio_a-rdma_client.obj: rdma_client.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-rdma_client.obj -MD -MP -MF "$(DEPDIR)/libcfio_a-rdma_client.Tpo" -c -o libcfio_a-rdma_client.obj `if test -f 'rdma_client.c'; then $(CYGPATH_W) 'rdma_client.c'; else $(CYGPATH_W) '$(srcdir)/rdma_client.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-rdma_client.Tpo" "$(DEPDIR)/libcfio_a-rdma_client.Po"; else rm -f "$(DEPDIR)/libcfio_a-rdma_client.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rdma_client.c' object='libcfio_a-rdma_client.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-rdma_client.obj `if test -f 'rdma_client.c'; then $(CYGPATH_W) 'rdma_client.c'; else $(CYGPATH_W) '$(srcdir)/rdma_client.c'; fi`
 
 libcfio_a-buffer.o: $(common_dir)/buffer.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-buffer.o -MD -MP -MF "$(DEPDIR)/libcfio_a-buffer.Tpo" -c -o libcfio_a-buffer.o `test -f '$(common_dir)/buffer.c' || echo '$(srcdir)/'`$(common_dir)/buffer.c; \
@@ -422,6 +443,20 @@ libcfio_a-times.obj: $(common_dir)/times.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-times.obj `if test -f '$(common_dir)/times.c'; then $(CYGPATH_W) '$(common_dir)/times.c'; else $(CYGPATH_W) '$(srcdir)/$(common_dir)/times.c'; fi`
 
+libcfio_a-addr.o: $(common_dir)/addr.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-addr.o -MD -MP -MF "$(DEPDIR)/libcfio_a-addr.Tpo" -c -o libcfio_a-addr.o `test -f '$(common_dir)/addr.c' || echo '$(srcdir)/'`$(common_dir)/addr.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-addr.Tpo" "$(DEPDIR)/libcfio_a-addr.Po"; else rm -f "$(DEPDIR)/libcfio_a-addr.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(common_dir)/addr.c' object='libcfio_a-addr.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-addr.o `test -f '$(common_dir)/addr.c' || echo '$(srcdir)/'`$(common_dir)/addr.c
+
+libcfio_a-addr.obj: $(common_dir)/addr.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-addr.obj -MD -MP -MF "$(DEPDIR)/libcfio_a-addr.Tpo" -c -o libcfio_a-addr.obj `if test -f '$(common_dir)/addr.c'; then $(CYGPATH_W) '$(common_dir)/addr.c'; else $(CYGPATH_W) '$(srcdir)/$(common_dir)/addr.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-addr.Tpo" "$(DEPDIR)/libcfio_a-addr.Po"; else rm -f "$(DEPDIR)/libcfio_a-addr.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(common_dir)/addr.c' object='libcfio_a-addr.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-addr.obj `if test -f '$(common_dir)/addr.c'; then $(CYGPATH_W) '$(common_dir)/addr.c'; else $(CYGPATH_W) '$(srcdir)/$(common_dir)/addr.c'; fi`
+
 libcfio_a-io.o: $(server_dir)/io.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-io.o -MD -MP -MF "$(DEPDIR)/libcfio_a-io.Tpo" -c -o libcfio_a-io.o `test -f '$(server_dir)/io.c' || echo '$(srcdir)/'`$(server_dir)/io.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-io.Tpo" "$(DEPDIR)/libcfio_a-io.Po"; else rm -f "$(DEPDIR)/libcfio_a-io.Tpo"; exit 1; fi
@@ -463,6 +498,20 @@ libcfio_a-recv.obj: $(server_dir)/recv.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(server_dir)/recv.c' object='libcfio_a-recv.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-recv.obj `if test -f '$(server_dir)/recv.c'; then $(CYGPATH_W) '$(server_dir)/recv.c'; else $(CYGPATH_W) '$(srcdir)/$(server_dir)/recv.c'; fi`
+
+libcfio_a-rdma_server.o: $(server_dir)/rdma_server.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-rdma_server.o -MD -MP -MF "$(DEPDIR)/libcfio_a-rdma_server.Tpo" -c -o libcfio_a-rdma_server.o `test -f '$(server_dir)/rdma_server.c' || echo '$(srcdir)/'`$(server_dir)/rdma_server.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-rdma_server.Tpo" "$(DEPDIR)/libcfio_a-rdma_server.Po"; else rm -f "$(DEPDIR)/libcfio_a-rdma_server.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(server_dir)/rdma_server.c' object='libcfio_a-rdma_server.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-rdma_server.o `test -f '$(server_dir)/rdma_server.c' || echo '$(srcdir)/'`$(server_dir)/rdma_server.c
+
+libcfio_a-rdma_server.obj: $(server_dir)/rdma_server.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -MT libcfio_a-rdma_server.obj -MD -MP -MF "$(DEPDIR)/libcfio_a-rdma_server.Tpo" -c -o libcfio_a-rdma_server.obj `if test -f '$(server_dir)/rdma_server.c'; then $(CYGPATH_W) '$(server_dir)/rdma_server.c'; else $(CYGPATH_W) '$(srcdir)/$(server_dir)/rdma_server.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libcfio_a-rdma_server.Tpo" "$(DEPDIR)/libcfio_a-rdma_server.Po"; else rm -f "$(DEPDIR)/libcfio_a-rdma_server.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(server_dir)/rdma_server.c' object='libcfio_a-rdma_server.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcfio_a_CFLAGS) $(CFLAGS) -c -o libcfio_a-rdma_server.obj `if test -f '$(server_dir)/rdma_server.c'; then $(CYGPATH_W) '$(server_dir)/rdma_server.c'; else $(CYGPATH_W) '$(srcdir)/$(server_dir)/rdma_server.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

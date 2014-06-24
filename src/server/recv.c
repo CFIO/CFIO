@@ -28,20 +28,15 @@
 #include "cfio_error.h"
 #include "define.h"
 
+//#define DEBUG
+
 static cfio_msg_t *msg_head;
 //use two buffer swap, in client :writer for pack, reader for send
 static cfio_buf_t **buffer;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t empty_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t empty_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t full_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t full_mutex = PTHREAD_MUTEX_INITIALIZER;
 static int rank;
 static int client_num;
 /* index used when call cfio_recv_get_first */
 static int client_get_index = 0;
-static int max_msg_size;
-size_t total_size = 0, min_size = 0, max_size = 0;
 
 int cfio_recv_init()
 {
@@ -76,8 +71,6 @@ int cfio_recv_init()
 	}
     }
 
-    max_msg_size = cfio_msg_get_max_size(rank);
-
     return CFIO_ERROR_NONE;
 }
 
@@ -86,9 +79,6 @@ int cfio_recv_final()
     cfio_msg_t *msg, *next;
     MPI_Status status;
     int i = 0;
-
-//    printf("Server %d ; recv size : %f M; max size : %f M; min size : %lu B\n",
-//	    rank, total_size/1024.0/1024.0, max_size/1024.0/1024.0, min_size);
 
     if(msg_head != NULL)
     {
@@ -107,98 +97,69 @@ int cfio_recv_final()
     return CFIO_ERROR_NONE;
 }
 
-static void cfio_recv_server_buf_free()
+int cfio_recv_add_msg(int client_rank, int size, char *data, uint32_t *func_code, int itr)
 {
-    assert(1 == 2);
-    return;
-}
-
-int cfio_iprobe(
-	int *src, int src_len, MPI_Comm comm, int *flag)
-{
-    int i;
-    MPI_Status status;
-    int _flag;
-
-    for(i = 0; i < src_len; i ++)
-    {
-	MPI_Iprobe(src[i], src[i], comm, &_flag, &status);
-	if(_flag == 1)
-	{
-	    *flag = 1;
-	    return CFIO_ERROR_NONE;
-	}
-    }
-    *flag = 0;
-    return CFIO_ERROR_NONE;
-}
-
-int cfio_recv(
-	int src, int rank, MPI_Comm comm, uint32_t *func_code)
-{
-    MPI_Status status;
-    int size;
-    cfio_msg_t *msg;
     int client_index;
+    cfio_msg_t *msg;
 
-    client_index = cfio_map_get_client_index_of_server(src);
-    //times_start();
-    debug(DEBUG_RECV, "client_index = %d", client_index);
-    if(is_free_space_enough(buffer[client_index], max_msg_size)
-	    == CFIO_BUF_FREE_SPACE_NOT_ENOUGH)
-    {
+    client_index = cfio_map_get_client_index_of_server(client_rank);
+
+    if (cfio_buf_is_empty(buffer[client_index])) {
+	cfio_buf_clear(buffer[client_index]);
+    }
+
+    if(is_free_space_enough(buffer[client_index], size)
+	    == CFIO_BUF_FREE_SPACE_NOT_ENOUGH) {
+#ifdef DEBUG
+	printf("itr %d server %d client %d buffer_info: start, used, free: %lu, %lu, %lu .\n", 
+		itr, rank, client_rank, (uintptr_t)(buffer[client_index]->start_addr),
+		(uintptr_t)(buffer[client_index]->used_addr),
+		(uintptr_t)(buffer[client_index]->free_addr));
+#endif
 	return CFIO_RECV_BUF_FULL;
     }
-//    ensure_free_space(buffer[client_index], max_msg_size, 
-//	    cfio_recv_server_buf_free);
 
-    MPI_Recv(buffer[client_index]->free_addr, max_msg_size, MPI_BYTE, src,  
-	    MPI_ANY_TAG, comm, &status);
-    MPI_Get_count(&status, MPI_BYTE, &size);
-    debug(DEBUG_RECV, "recv: size = %d", size);
-    //total_size += size;
-    //if(min_size == 0 || min_size > size)
-    //{
-    //    min_size = size;
-    //}
-    //if(max_size == 0 || max_size < size)
-    //{
-    //    max_size = size;
-    //}
+    *func_code = *((uint32_t *)(data + sizeof(size_t)));
 
-    //printf("proc %d , recv: size = %d, from %d\n",rank, size, src);
-    //debug(DEBUG_RECV, "code = %u", *((uint32_t *)buffer->free_addr));
+#ifdef DEBUG
+    printf("itr %d server %d client %d func_code %d msg_size %d \n", itr, rank, client_rank, *func_code, size);
+#endif
 
-    if(status.MPI_SOURCE != status.MPI_TAG)
-    {
-	return CFIO_ERROR_MPI_RECV;
+    if (!size) {
+#ifdef DEBUG
+	printf("itr %d server %d client %d buffer_info: start, used, free: %lu, %lu, %lu .\n", 
+		itr, rank, client_rank, (uintptr_t)(buffer[client_index]->start_addr),
+		(uintptr_t)(buffer[client_index]->used_addr),
+		(uintptr_t)(buffer[client_index]->free_addr));
+#endif
+	return CFIO_ERROR_UNEXPECTED_MSG;
     }
+
+    if (FUNC_FINAL == *func_code) {
+	return CFIO_ERROR_NONE;
+    } else if (FUNC_NC_CLOSE == *func_code) {
+#ifdef DEBUG
+	printf("itr %d server %d client %d buffer_info: start, end, used, free: %lu, %lu, %lu, %lu .\n", 
+		itr, rank, client_rank, 
+		(uintptr_t)(buffer[client_index]->start_addr),
+		(uintptr_t)(buffer[client_index]->start_addr + buffer[client_index]->size),
+		(uintptr_t)(buffer[client_index]->used_addr),
+		(uintptr_t)(buffer[client_index]->free_addr));
+#endif
+    }
+
+    memcpy(buffer[client_index]->free_addr, data, size);
 
     msg = cfio_msg_create();
     msg->addr = buffer[client_index]->free_addr;
     msg->size = size;
-    msg->src = status.MPI_SOURCE;
+    msg->src = client_rank;
     msg->dst = rank;
-    // get the func_code but not unpack it
-    msg->func_code = *((uint32_t*)(msg->addr + sizeof(size_t))); 
-    *func_code = msg->func_code;
-    debug(DEBUG_RECV, "func_code = %u", *func_code);
+    msg->func_code = *func_code; 
 
-#ifndef SVR_RECV_ONLY
     use_buf(buffer[client_index], size);
-#endif
-    
-    /* need lock */
-    if((*func_code) != FUNC_IO_END)
-    {
-#ifndef SVR_RECV_ONLY
-	qlist_add_tail(&(msg->link), &(msg_head[client_index].link));
-#endif
-    }
-    
-    //debug(DEBUG_RECV, "uesd_size = %lu", used_buf_size(buffer));
-    debug(DEBUG_RECV, "success return");
-    
+    qlist_add_tail(&(msg->link), &(msg_head[client_index].link));
+
     return CFIO_ERROR_NONE;
 }
 
@@ -257,9 +218,6 @@ int cfio_recv_unpack_msg_size(cfio_msg_t *msg, size_t *size)
 
     client_index = cfio_map_get_client_index_of_server(msg->src);
     debug(DEBUG_RECV, "client_index = %d", client_index);
-
-//    printf("%lu : %lu : %lu \n", msg->addr, buffer[client_index]->start_addr,
-//	buffer[client_index]->start_addr + buffer[client_index]->size);
 
     assert(check_used_addr(msg->addr, buffer[client_index]));
     

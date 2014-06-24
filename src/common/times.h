@@ -45,4 +45,6 @@ int times_start();
  */
 double times_end();
 
+void times_busy(double time_in_ms);
+
 #endif

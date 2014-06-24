@@ -65,8 +65,6 @@ int cfio_io_init();
  * @return: error code
  */
 int cfio_io_final();
-int cfio_io_reader_done(int client_id, int *server_done);
-int cfio_io_writer_done(int client_id, int *server_done);
 int cfio_io_create(cfio_msg_t *msg);
 int cfio_io_def_dim(cfio_msg_t *msg);
 int cfio_io_def_var(cfio_msg_t *msg);

@@ -36,9 +36,6 @@
 
 static struct qhash_table *io_table;
 static int server_id;
-//static double start_time;
-//static int file_num = 0;
-//static double write_time = 0.0;
 
 static int _compare(void *key, struct qhash_head *link)
 {
@@ -502,7 +499,6 @@ int cfio_io_init()
     io_table = qhash_init(_compare, _hash, IO_HASH_TABLE_SIZE);
     MPI_Comm_rank(MPI_COMM_WORLD, &server_id);
 
-    //start_time = times_cur();
     return CFIO_ERROR_NONE;
 }
 
@@ -517,38 +513,6 @@ int cfio_io_final()
     return CFIO_ERROR_NONE;
 }
 
-int cfio_io_reader_done(int client_id, int *server_done)
-{
-    int func_code = FUNC_READER_FINAL;
-    cfio_io_val_t *io_info;
-
-    _recv_client_io(client_id, func_code, 0, 0, 0, &io_info);
-
-    if(_bitmap_full(io_info->client_bitmap))
-    {
-	_remove_client_io(io_info);
-	*server_done = 1;
-    }
-
-    return CFIO_ERROR_NONE;	
-}
-
-int cfio_io_writer_done(int client_id, int *server_done)
-{
-    int func_code = FUNC_WRITER_FINAL;
-    cfio_io_val_t *io_info;
-
-    _recv_client_io(client_id, func_code, 0, 0, 0, &io_info);
-
-    if(_bitmap_full(io_info->client_bitmap))
-    {
-	_remove_client_io(io_info);
-	*server_done = 1;
-    }
-
-    return CFIO_ERROR_NONE;	
-}
-
 int cfio_io_create(cfio_msg_t *msg)
 {
     int ret, cmode;
@@ -561,9 +525,6 @@ int cfio_io_create(cfio_msg_t *msg)
     char *path;
     int sub_file_amount;
     int client_id = msg->src;
-
-    //printf("create %d time : %f\n", (file_num ++) % 4, times_cur() - start_time);
-    //printf("create %d time : %f\n", file_num ++, times_cur() - start_time);
 
     cfio_recv_unpack_create(msg, &_path,&cmode, &client_nc_id);
 
@@ -585,6 +546,7 @@ int cfio_io_create(cfio_msg_t *msg)
     if(CFIO_ID_HASH_GET_NULL == cfio_id_get_nc(client_nc_id, &nc))
     {
 	cfio_id_map_nc(client_nc_id, CFIO_ID_NC_INVALID);
+
 	//if(_bitmap_full(io_info->client_bitmap))
 	//{
 #ifndef SVR_NO_IO
@@ -1074,8 +1036,6 @@ int cfio_io_put_vara(cfio_msg_t *msg)
 
     MPI_Offset *pnc_start = NULL, *pnc_count = NULL;
 
-    //double start_time, end_time;
-
     //    ret = cfio_unpack_msg_extra_data_size(h_buf, &data_size);
     ret = cfio_recv_unpack_put_vara(msg, 
 	    &client_nc_id, &client_var_id, &ndims, &start, &count,
@@ -1086,8 +1046,6 @@ int cfio_io_put_vara(cfio_msg_t *msg)
 	    debug(DEBUG_IO, "recv dim %d: start(%lu), count(%lu)", 
 		    i, start[i], count[i]);
 	    debug(DEBUG_IO, "recv data = %f", ((double *)data)[0]);
-	//    printf( "dim %d: start(%lu), count(%lu)\n", 
-	//	    i, total_start[i], total_count[i]);
     }
     debug(DEBUG_IO, "client_var_id = %d", client_var_id);
     if( ret < 0 )
@@ -1165,8 +1123,6 @@ int cfio_io_put_vara(cfio_msg_t *msg)
 	{
 	    debug(DEBUG_IO, "dim %d: start(%lu), count(%lu)", 
 		    i, total_start[i], total_count[i]);
-	//    printf( "server %d: dim %d: start(%lu), count(%lu)\n", 
-	//	    server_id, i, total_start[i], total_count[i]);
 	}
 	debug(DEBUG_IO, "nc_id = %d, var_id = %d", nc->nc_id, var->var_id);
 	debug(DEBUG_IO, "first data = %f", ((float *)total_data)[0]);
@@ -1226,8 +1182,6 @@ int cfio_io_put_vara(cfio_msg_t *msg)
 #endif
 		break;
 	}
-	//end_time = times_cur();
-	//write_time += end_time - start_time;
 
         if( ret != NC_NOERR )
         {
@@ -1239,7 +1193,6 @@ int cfio_io_put_vara(cfio_msg_t *msg)
     }
 
     return_code = CFIO_ERROR_NONE;	
-    //printf("proc : %d, write_time : %f\n", server_id, write_time);
 
 RETURN :
 

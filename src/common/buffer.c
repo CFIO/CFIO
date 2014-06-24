@@ -62,7 +62,7 @@ cfio_buf_t *cfio_buf_open(size_t size, int *error)
     buf_p->magic = CFIO_BUF_MAGIC;
     buf_p->size = size;
     buf_p->start_addr = (char *)buf_p + sizeof(cfio_buf_t);
-    buf_p->free_addr = buf_p->used_addr = buf_p->start_addr;
+    buf_p->free_addr = buf_p->used_addr = buf_p->end_addr = buf_p->start_addr;
     buf_p->magic2 = CFIO_BUF_MAGIC;
 
     return buf_p;

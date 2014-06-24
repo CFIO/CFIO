@@ -91,3 +91,11 @@ double times_end()
 
     return (cur_time - start_time);
 }
+
+void times_busy(double time_in_ms) {
+    struct timeval begin, end;
+    gettimeofday(&begin, NULL);
+    do {
+	gettimeofday(&end, NULL);
+    } while ((end.tv_sec - begin.tv_sec) * 1000 + (end.tv_usec - begin.tv_usec) / 1000 < time_in_ms);
+}

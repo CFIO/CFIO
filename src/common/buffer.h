@@ -43,8 +43,11 @@ typedef struct
     char *start_addr;	/* start address of the buffer */
     char *free_addr;	/* start address of free buffer */
     char *used_addr;	/* start address of used buffer */
+    char *end_addr;	/* end address of used buffer, useful when free<used */
     uint16_t magic2;	/* upper magic of the buffer */
 }cfio_buf_t;
+
+#define cfio_buf_is_empty(buf_p) ((buf_p)->used_addr == (buf_p)->free_addr)? 1: 0
 
 /**
  * @brief: increase a buffer's free_addr, means more buffer space was used
@@ -57,6 +60,11 @@ static inline void use_buf(cfio_buf_t *buf_p, size_t size)
     buf_p->free_addr += size;
     if(buf_p->free_addr >= ((buf_p->start_addr) + buf_p->size))
     {
+	// zc
+	// record end_addr here, buf_p->end_addr = buf_p->free_addr
+	buf_p->end_addr = buf_p->free_addr -size;
+	// zc
+	
 	buf_p->free_addr -= buf_p->size;
     }
 }

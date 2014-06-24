@@ -20,15 +20,16 @@
 
 #include <stdlib.h>
 
+#include "mpi.h"
 #include "cfio_types.h"
 
-#define CLIENT_BUF_SIZE ((size_t)512*1024*1024)
+#define CLIENT_BUF_SIZE ((size_t)100*1024*1024)
 
 #define CFIO_PROC_CLIENT 1
 #define CFIO_PROC_SERVER 2
 #define CFIO_PROC_BLANK	 3
 
-#define CFIO_START() \
+#define CFIO_START(rank) \
     if(cfio_proc_type() == CFIO_PROC_CLIENT) {
 
 #define CFIO_END()	\
