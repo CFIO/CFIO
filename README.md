@@ -7,7 +7,7 @@ CFIO provides the same interface and feature as PnetCDF, and adopts an I/O forwa
 of I/O with computing. CFIO performs better than PnetCDF in terms of decreasing the overall running time of the program.
 
 
-What you need to build CFIO
+What do you need to build CFIO
 ---------------------------
 
 You need the following softwares been installed before build CFIO, otherwise you may fail to configure.
